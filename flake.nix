@@ -5,6 +5,7 @@
     # Used by the core system config
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixops.url = "github:NixOS/nixops/master";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +30,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nixops
   , comma, flake-utils, ... }:
   let
     x86System = "x86_64-linux";
@@ -68,6 +69,13 @@
     (system: 
     let pkgs = nixpkgs.legacyPackages.${system}; in
     {
-      devShell = import ./shell.nix { inherit pkgs; };
+      devShell = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          nixops
+          comma
+          nixpkgs-fmt
+          nixfmt
+        ];
+      };
     }));
   }

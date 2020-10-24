@@ -52,6 +52,26 @@
         "type": "github"
       }
     },
+    "nixops": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1601388257,
+        "narHash": "sha256-Kk1T9UUB5ALL+PDe8r5EMBEuk5lpcFqnQlzyWySQI0o=",
+        "owner": "NixOS",
+        "repo": "nixops",
+        "rev": "c9fdc936ba7066564993b6b34557c2f0f77f43ab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixops",
+        "type": "github"
+      }
+    },
     "nixos-generators": {
       "flake": false,
       "locked": {
@@ -85,16 +105,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1603176674,
-        "narHash": "sha256-r9vgYYqL1HfhMaVJX3b0rBoKHsc4FSSVnWArevM1Nss=",
+        "lastModified": 1593886469,
+        "narHash": "sha256-it7gY5BmUcDr09dUsE6VPnUsSCeBUtU/GfUwqs6twDc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "05334ad78526ead39af85f846515606d9f052a11",
+        "rev": "dc80d7bc4a244120b3d766746c41c0d9c5f81dfa",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-20.09",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -115,15 +135,47 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1603176674,
+        "narHash": "sha256-r9vgYYqL1HfhMaVJX3b0rBoKHsc4FSSVnWArevM1Nss=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "05334ad78526ead39af85f846515606d9f052a11",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-20.09",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "comma": "comma",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "nixops": "nixops",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1594123299,
+        "narHash": "sha256-zxjtMmOV93pIVG242RpEXu14w/13XYDo3ygMoRIJg4c=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "590d6d1badea1956a31480a0cba1d8d029cf45d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },
