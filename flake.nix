@@ -2,6 +2,10 @@
   description = "RaitoBezarius's cute infrastructure";
 
   inputs = {
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     # Used by the core system config
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -41,8 +45,25 @@
         config.allowUnfree = true;
       };
     };
-  in {
-    nixopsConfigurations.pine-a64-hecate = nixpkgs.lib.nixopsSystem {
+   in flake-utils.lib.eachDefaultSystem
+    (system: 
+    let pkgs = nixpkgs.legacyPackages.${system}; in
+    {
+      devShell = pkgs.mkShell {
+        buildInputs = [
+          pkgs.nixFlakes
+          nixops
+          comma
+          pkgs.nixpkgs-fmt
+          pkgs.nixfmt
+        ];
+
+        shellHook = ''
+          which nixops
+        '';
+      };
+    }) // (if false then {
+      nixopsConfigurations.pine-a64-hecate = nixpkgs.lib.nixopsSystem {
       system = aarch64System;
       modules = [
         ({ lib, config, pkgs, ... }: {
@@ -65,17 +86,5 @@
           })
         ];
       };
-    } // (flake-utils.lib.eachDefaultSystem
-    (system: 
-    let pkgs = nixpkgs.legacyPackages.${system}; in
-    {
-      devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          nixops
-          comma
-          nixpkgs-fmt
-          nixfmt
-        ];
-      };
-    }));
+    } else {});
   }
