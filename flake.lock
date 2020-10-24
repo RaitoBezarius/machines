@@ -201,6 +201,23 @@
         "type": "github"
       }
     },
+    "raito-nur": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1603544643,
+        "narHash": "sha256-d1InZAQPEFN8nHbyLQRK3jAhZLkZ6CAe1zmzW+7FgNE=",
+        "owner": "RaitoBezarius",
+        "repo": "nixexprs",
+        "rev": "439a2cc4f1a0a2f084ec835ec461e999ada93bb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RaitoBezarius",
+        "ref": "master",
+        "repo": "nixexprs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "comma": "comma",
@@ -211,7 +228,8 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "raito-nur": "raito-nur"
       }
     }
   },

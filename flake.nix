@@ -10,6 +10,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixops.url = "github:NixOS/nixops/flake-support";
+    raito-nur = {
+      url = "github:RaitoBezarius/nixexprs/master";
+      flake = false;
+    };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +38,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nixops
+  outputs = { self, nixpkgs, nixpkgs-unstable, raito-nur, nixos-hardware, home-manager, nixops
   , comma, flake-utils, ... }:
   let
     x86System = "x86_64-linux";
@@ -44,10 +48,14 @@
         inherit system;
         config.allowUnfree = true;
       };
+      raito = import raito-nur {
+        inherit system;
+      };
     };
    in flake-utils.lib.eachDefaultSystem
     (system: 
-    let pkgs = nixpkgs.legacyPackages.${system}; in
+    let pkgs = nixpkgs-unstable.legacyPackages.${system};
+    in
     {
       devShell = pkgs.mkShell {
         buildInputs = [
