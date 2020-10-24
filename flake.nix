@@ -5,7 +5,7 @@
     # Used by the core system config
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixops.url = "github:NixOS/nixops/master";
+    nixops.url = "github:NixOS/nixops/flake-support";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,7 +42,7 @@
       };
     };
   in {
-    nixosConfigurations.pine-a64-hecate = nixpkgs.lib.nixosSystem {
+    nixopsConfigurations.pine-a64-hecate = nixpkgs.lib.nixopsSystem {
       system = aarch64System;
       modules = [
         ({ lib, config, pkgs, ... }: {
