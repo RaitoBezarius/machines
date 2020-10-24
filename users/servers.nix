@@ -1,0 +1,4 @@
+{ ... }:
+{
+  imports = [ ./individuals/raito.nix ];
+}
