@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   deployment.targetEnv = "none";
   deployment.targetHost = "hecate.v6.lahfa.xyz";

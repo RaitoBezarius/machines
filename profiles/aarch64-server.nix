@@ -1,4 +1,4 @@
 { pkgs, ... }:
 {
-  imports = [ ./minimal-server.nix ];
+  imports = [ ./baseline-server.nix ];
 }

@@ -1,6 +1,6 @@
 { pkgs, lib, nixpkgs, nixpkgs-unstable, comma, ... }:
 {
-  imports = [ ../profiles/aarch64-server.nix ../profiles/syslinux-boot.nix ];
+  imports = [ ../../profiles/aarch64-server.nix ../../profiles/syslinux-boot.nix ];
 
   system.stateVersion = "21.03";
 

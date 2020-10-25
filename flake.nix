@@ -53,46 +53,44 @@
         inherit system;
       };
     };
-   in flake-utils.lib.eachDefaultSystem
-    (system: 
-    let pkgs = nixpkgs-unstable.legacyPackages.${system};
-    in
-    {
-      devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          nixFlakes
-          nixpkgs-fmt
-          nixfmt
-          git-crypt
-          gitFull
-          ((import comma) {
-            inherit pkgs;
+  in flake-utils.lib.eachDefaultSystem
+  (system: 
+  let pkgs = nixpkgs-unstable.legacyPackages.${system};
+  in
+  {
+    devShell = pkgs.mkShell {
+      buildInputs = with pkgs; [
+        nixFlakes
+        nixpkgs-fmt
+        nixfmt
+        git-crypt
+        gitFull
+        ((import comma) {
+          inherit pkgs;
+        })
+      ] ++ (pkgs.lib.optionals (system == "x86_64-linux") [ nixops.defaultPackage.x86_64-linux ]);
+    };
+  }) // ({
+    nixopsConfigurations.default = {
+      inherit nixpkgs;
+      pine-a64-hecate = { config, pkgs, lib, ... }: {
+        imports = [
+          (import ./physical/hecate.nix {
+            inherit pkgs lib;
           })
-        ] ++ (pkgs.lib.optionals (system == "x86_64-linux") [ nixops.defaultPackage.x86_64-linux ]);
-      };
-    }) // (if true then {
-      nixopsConfigurations.default.pine-a64-hecate = nixpkgs.lib.nixopsSystem {
-      system = aarch64System;
-      modules = [
-        ({ lib, config, pkgs, ... }: {
-          imports = [
-            (import ./physical/hecate.nix {
-              inherit pkgs;
-            })
-            (import ./machines/hecate.nix {
-              inherit pkgs lib nixpkgs nixpkgs-unstable home-manager comma;
-            })
-            (import ./common/flake-conf.nix {
-              inherit pkgs nixpkgs nixpkgs-unstable;
-            })
-          ];
-          nixpkgs.overlays = [ (overlay-unstable aarch64System) ];
-          nixpkgs.config.allowUnfree = true;
-          system.configurationRevision =
-            nixpkgs.lib.mkIf (self ? rev) self.rev;
-            nix.registry.nixpkgs.flake = nixpkgs;
+          (import ./machines/hecate {
+            inherit pkgs lib nixpkgs nixpkgs-unstable home-manager comma;
+          })
+          (import ./common/flake-conf.nix {
+            inherit pkgs nixpkgs nixpkgs-unstable;
           })
         ];
+        nixpkgs.overlays = [ (overlay-unstable aarch64System) ];
+        nixpkgs.config.allowUnfree = true;
+        system.configurationRevision =
+          nixpkgs.lib.mkIf (self ? rev) self.rev;
+          nix.registry.nixpkgs.flake = nixpkgs;
+        };
       };
-    } else {});
+    });
   }
