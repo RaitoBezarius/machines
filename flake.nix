@@ -44,6 +44,7 @@
     x86System = "x86_64-linux";
     aarch64System = "aarch64-linux";
     overlay-unstable = system: final: prev: {
+      inherit nixops;
       unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
@@ -58,20 +59,19 @@
     in
     {
       devShell = pkgs.mkShell {
-        buildInputs = [
-          pkgs.nixFlakes
-          nixops
-          comma
-          pkgs.nixpkgs-fmt
-          pkgs.nixfmt
-        ];
-
-        shellHook = ''
-          which nixops
-        '';
+        buildInputs = with pkgs; [
+          nixFlakes
+          nixpkgs-fmt
+          nixfmt
+          git-crypt
+          gitFull
+          ((import comma) {
+            inherit pkgs;
+          })
+        ] ++ (pkgs.lib.optionals (system == "x86_64-linux") [ nixops.defaultPackage.x86_64-linux ]);
       };
-    }) // (if false then {
-      nixopsConfigurations.pine-a64-hecate = nixpkgs.lib.nixopsSystem {
+    }) // (if true then {
+      nixopsConfigurations.default.pine-a64-hecate = nixpkgs.lib.nixopsSystem {
       system = aarch64System;
       modules = [
         ({ lib, config, pkgs, ... }: {
