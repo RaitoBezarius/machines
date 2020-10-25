@@ -1,1 +1,4 @@
 .direnv
+scratchpad.nix
+secrets/*-shm
+secrets/*-wal
