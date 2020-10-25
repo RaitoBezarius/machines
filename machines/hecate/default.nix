@@ -4,7 +4,7 @@
 
   system.stateVersion = "21.03";
 
-  networking.hostname = "hecate";
+  networking.hostName = "hecate";
   # Set up IPv4 & IPv6.
   networking.interfaces.eth0.useDHCP = true;
 }

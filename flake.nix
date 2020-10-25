@@ -72,7 +72,11 @@
     };
   }) // ({
     nixopsConfigurations.default = {
-      inherit nixpkgs;
+      nixpkgs = nixpkgs-unstable;
+      network = {
+        description = "RaitoBezarius' infrastructure";
+        enableRollbacks = true;
+      };
       pine-a64-hecate = { config, pkgs, lib, ... }: {
         imports = [
           (import ./physical/hecate.nix {
